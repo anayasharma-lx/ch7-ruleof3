@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rule of Three</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4f0; --surface:#fff; --surface2:#f0ede8; --border:#d8d4cc;
+  --text:#1a1814; --text2:#5a5650; --text3:#9a958e;
+  --blue:#2c5f9e; --red:#c0392b; --green:#1a7a4a; --orange:#e08020;
+  --font:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'DM Mono',ui-monospace,monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);
+  min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5;padding:24px 16px}
+.app{max-width:920px;margin:0 auto}
+
+.head{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.head-ic{width:42px;height:42px;border-radius:10px;background:var(--surface2);
+  border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:600;color:var(--text2);font-size:16px;flex-shrink:0}
+.lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:3px}
+.title{font-size:22px;font-weight:700;color:var(--text);line-height:1.2}
+
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
+.card-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:14px}
+
+.intro{font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:18px}
+.intro strong{color:var(--text)}
+
+/* Mode toggle */
+.mode-toggle{display:flex;gap:0;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:8px;padding:3px;width:fit-content;margin:0 auto 18px;flex-wrap:wrap}
+.mode-toggle button{padding:8px 16px;border:none;background:transparent;border-radius:6px;
+  font-family:var(--font);font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s}
+.mode-toggle button.active{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+/* Preset scenarios */
+.preset-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
+.preset-btn{padding:7px 12px;border-radius:8px;background:var(--surface);border:1.5px solid var(--border);
+  font-family:var(--font);font-size:12px;color:var(--text2);cursor:pointer;font-weight:600;transition:all .12s}
+.preset-btn:hover{border-color:var(--text3);color:var(--text)}
+.preset-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* Scenario card */
+.scenario{padding:14px 18px;background:#fff8f0;border:1px solid #f0d8c0;border-radius:9px;margin-bottom:18px;
+  font-size:13px;color:#6b4400;line-height:1.6;font-style:italic}
+.scenario strong{color:#4a2e00;font-style:normal}
+
+/* The proportion grid: 2x2 cells with labels and = sign */
+.prop-grid{display:grid;grid-template-columns:auto 1fr auto auto auto 1fr;gap:14px;align-items:center;
+  padding:24px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;margin-bottom:14px;
+  overflow-x:auto;justify-content:center}
+.col-lbl{font-family:var(--mono);font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;text-align:center}
+.row-lbl{font-family:var(--mono);font-size:13px;color:var(--text2);font-weight:600;white-space:nowrap}
+.cell{padding:14px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;
+  font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);text-align:center;min-width:90px;line-height:1.2}
+.cell.unknown{background:#2c5f9e10;border-color:var(--blue);color:var(--blue)}
+.cell.computed{background:#1a7a4a10;border-color:var(--green);color:var(--green)}
+.cell input{width:100%;border:none;background:transparent;text-align:center;font-family:var(--mono);
+  font-size:20px;font-weight:700;color:var(--text);outline:none}
+.cell .unit{font-size:10px;color:var(--text3);font-weight:500;text-transform:lowercase;margin-top:3px}
+
+.eq-sign{font-family:var(--mono);font-size:24px;color:var(--text2);font-weight:700}
+
+/* Cross multiplication visualization */
+.cross-viz{position:relative;padding:18px 30px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;margin-bottom:14px}
+.cross-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;justify-items:center;font-family:var(--mono);font-weight:700;font-size:24px;color:var(--text);position:relative;z-index:2;max-width:340px;margin:0 auto}
+.cross-grid .ce{padding:8px 16px;background:var(--surface2);border-radius:7px;min-width:70px;text-align:center;border:1.5px solid var(--border)}
+.cross-grid .ce.hl-down{background:#2c5f9e15;color:var(--blue);border-color:var(--blue)}
+.cross-grid .ce.hl-up{background:#e0802015;color:var(--orange);border-color:var(--orange)}
+.cross-grid svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.cross-equation{text-align:center;font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);margin-top:16px}
+.cross-equation .lhs{color:var(--blue)}
+.cross-equation .rhs{color:var(--orange)}
+.cross-equation .eq{color:var(--text3);margin:0 8px}
+
+/* Answer */
+.answer-box{padding:16px 20px;background:var(--surface);border:1.5px solid var(--green);border-radius:10px;
+  margin-bottom:14px;text-align:center}
+.answer-box .ab-lbl{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.answer-box .ab-val{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--green);line-height:1}
+.answer-box .ab-sub{font-family:var(--mono);font-size:13px;color:var(--text2);margin-top:6px}
+
+/* Factor view */
+.factor-view{padding:14px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;
+  margin-bottom:14px;font-family:var(--mono);font-size:14px;color:var(--text);text-align:center;line-height:1.8}
+.factor-view .arrow{color:var(--text3)}
+.factor-view .factor{color:var(--blue);font-weight:700;padding:3px 8px;background:#2c5f9e10;border-radius:5px}
+
+.insight{background:#fff8f0;border:1px solid #f0d8c0;border-left:3px solid var(--orange);
+  border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;
+  line-height:1.65;margin-top:14px}
+.insight strong{color:#4a2e00;font-weight:700}
+
+.warn-box{background:#fbf2f0;border:1px solid #e6c5bf;border-left:3px solid var(--red);
+  border-radius:0 8px 8px 0;padding:14px 16px;font-size:13px;color:#7a1a10;line-height:1.65;margin-top:14px}
+.warn-box strong{color:#4d0d05}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="head">
+    <div class="head-ic">7.4</div>
+    <div>
+      <div class="lbl">Chapter 7 · Section 7.4</div>
+      <div class="title">Rule of Three</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="intro">
+      Three values known, one missing — the classic <strong>a : b :: c : d</strong> setup. Cross-multiplying gives <strong>a·d = b·c</strong>, so the unknown can always be found. But beware: <strong>not every proportional-looking problem is direct</strong>. Some are inverse — more speed means less time, not more.
+    </p>
+
+    <div class="mode-toggle">
+      <button class="active" data-mode="direct">Direct proportion</button>
+      <button data-mode="inverse">Inverse proportion ⚠️</button>
+    </div>
+
+    <div class="preset-row" id="presets"></div>
+
+    <div class="scenario" id="scenario"></div>
+
+    <div class="prop-grid" id="prop-grid"></div>
+
+    <div class="cross-viz" id="cross-viz"></div>
+
+    <div class="factor-view" id="factor-view"></div>
+
+    <div class="answer-box" id="answer"></div>
+
+    <div id="insight-area"></div>
+  </div>
+</div>
+
+<script>
+const SCENARIOS = {
+  direct: [
+    {
+      label: 'Lemonade',
+      story: 'Kesang adds 10 spoons of sugar to 6 glasses of lemonade. For 18 glasses with the same sweetness, how many spoons does she need?',
+      labelA: 'Glasses', labelB: 'Spoons of sugar',
+      a: 6, b: 10, c: 18, dUnknown: true,
+      unit: 'spoons'
+    },
+    {
+      label: 'Car distance',
+      story: 'A car travels 90 km in 150 minutes. At the same speed, how far in 240 minutes?',
+      labelA: 'Time (min)', labelB: 'Distance (km)',
+      a: 150, b: 90, c: 240, dUnknown: true,
+      unit: 'km'
+    },
+    {
+      label: 'Mid-day meal',
+      story: 'For 120 students, the cook makes 15 kg of rice. For 80 students, how much rice?',
+      labelA: 'Students', labelB: 'Rice (kg)',
+      a: 120, b: 15, c: 80, dUnknown: true,
+      unit: 'kg'
+    },
+    {
+      label: 'Bricks for wall',
+      story: 'A 10-ft wall takes 1450 bricks. How many bricks for a 108-ft wall?',
+      labelA: 'Wall length (ft)', labelB: 'Bricks',
+      a: 10, b: 1450, c: 108, dUnknown: true,
+      unit: 'bricks'
+    },
+    {
+      label: 'Earth in a week',
+      story: 'Earth travels 940 million km in a year (52 weeks). How far in 1 week?',
+      labelA: 'Weeks', labelB: 'Distance (mil km)',
+      a: 52, b: 940, c: 1, dUnknown: true,
+      unit: 'mil km'
+    }
+  ],
+  inverse: [
+    {
+      label: 'Speed vs time',
+      story: "Puneeth's father covers Lucknow→Kanpur in 2 hours at 50 km/h. How long at 75 km/h?",
+      labelA: 'Speed (km/h)', labelB: 'Time (hours)',
+      a: 50, b: 2, c: 75, dUnknown: true,
+      unit: 'hours'
+    },
+    {
+      label: 'Workers & days',
+      story: '6 workers finish a job in 10 days. How many days for 15 workers (same job)?',
+      labelA: 'Workers', labelB: 'Days',
+      a: 6, b: 10, c: 15, dUnknown: true,
+      unit: 'days'
+    },
+    {
+      label: 'Tractor vs oxen',
+      story: 'A pair of oxen plough 1 acre in 6 hours. A tractor is 4× faster. How many hours for the tractor?',
+      labelA: 'Speed multiplier', labelB: 'Hours per acre',
+      a: 1, b: 6, c: 4, dUnknown: true,
+      unit: 'hours'
+    }
+  ]
+};
+
+const state = {
+  mode: 'direct',
+  scenarioIdx: 0,
+  a: 6, b: 10, c: 18, d: '',
+  labelA: 'Glasses', labelB: 'Spoons of sugar',
+  unit: 'spoons'
+};
+
+function loadScenario(){
+  const s = SCENARIOS[state.mode][state.scenarioIdx];
+  state.a = s.a; state.b = s.b; state.c = s.c; state.d = '';
+  state.labelA = s.labelA; state.labelB = s.labelB; state.unit = s.unit;
+  render();
+}
+
+document.querySelectorAll('.mode-toggle button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.mode-toggle button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.mode = b.dataset.mode;
+    state.scenarioIdx = 0;
+    loadScenario();
+  });
+});
+
+function render(){
+  // Presets
+  const presets = SCENARIOS[state.mode];
+  document.getElementById('presets').innerHTML = presets.map((s,i) =>
+    `<button class="preset-btn ${i===state.scenarioIdx?'active':''}" data-i="${i}">${s.label}</button>`
+  ).join('');
+  document.querySelectorAll('.preset-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      state.scenarioIdx = +b.dataset.i;
+      loadScenario();
+    });
+  });
+
+  const s = SCENARIOS[state.mode][state.scenarioIdx];
+  document.getElementById('scenario').innerHTML = s.story;
+
+  // Compute d
+  let d;
+  if(state.mode === 'direct'){
+    // a:b :: c:d → d = b*c/a
+    d = (state.b * state.c) / state.a;
+  } else {
+    // inverse: a*b = c*d → d = a*b/c
+    d = (state.a * state.b) / state.c;
+  }
+  state.d = d;
+
+  // Display proportion grid: 2 columns (a/c) and (b/d), with labels above and rows
+  document.getElementById('prop-grid').innerHTML = `
+    <div></div>
+    <div class="col-lbl" style="color:var(--blue)">${state.labelA}</div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div class="col-lbl" style="color:var(--orange)">${state.labelB}</div>
+
+    <div class="row-lbl">Known →</div>
+    <div class="cell">${state.a}</div>
+    <div></div>
+    <div class="eq-sign">∶</div>
+    <div></div>
+    <div class="cell">${state.b}</div>
+
+    <div class="row-lbl">New →</div>
+    <div class="cell">${state.c}</div>
+    <div class="eq-sign">∷</div>
+    <div></div>
+    <div class="eq-sign">∶</div>
+    <div class="cell unknown">?<div class="unit">${state.unit}</div></div>
+  `;
+
+  // Cross multiplication visualization
+  let crossEq;
+  if(state.mode === 'direct'){
+    crossEq = `<span class="lhs">${state.a} × ?</span><span class="eq">=</span><span class="rhs">${state.b} × ${state.c}</span> &nbsp;&nbsp;→&nbsp;&nbsp; ? = (${state.b} × ${state.c}) ÷ ${state.a}`;
+  } else {
+    crossEq = `<span class="lhs">${state.a} × ${state.b}</span><span class="eq">=</span><span class="rhs">${state.c} × ?</span> &nbsp;&nbsp;→&nbsp;&nbsp; ? = (${state.a} × ${state.b}) ÷ ${state.c}`;
+  }
+  document.getElementById('cross-viz').innerHTML = `
+    <div style="position:relative">
+      <div class="cross-grid">
+        <div class="ce ${state.mode==='direct'?'hl-down':'hl-up'}">${state.a}</div>
+        <div class="ce ${state.mode==='direct'?'hl-up':'hl-down'}">${state.b}</div>
+        <div class="ce ${state.mode==='direct'?'hl-up':'hl-down'}">${state.c}</div>
+        <div class="ce ${state.mode==='direct'?'hl-down':'hl-up'}">?</div>
+      </div>
+      <svg viewBox="0 0 340 100" preserveAspectRatio="none" style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:340px;height:100%;pointer-events:none">
+        ${state.mode === 'direct' ?
+          `<line x1="55" y1="22" x2="285" y2="78" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+           <line x1="285" y1="22" x2="55" y2="78" stroke="var(--orange)" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>` :
+          `<line x1="55" y1="22" x2="55" y2="78" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+           <line x1="285" y1="22" x2="285" y2="78" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>`
+        }
+      </svg>
+    </div>
+    <div class="cross-equation">${crossEq}</div>
+  `;
+
+  // Factor view
+  if(state.mode === 'direct'){
+    const factor = state.c / state.a;
+    const fStr = Number.isInteger(factor) ? factor : factor.toFixed(2);
+    document.getElementById('factor-view').innerHTML = `
+      First column: ${state.a} <span class="arrow">→</span> ${state.c} &nbsp;&nbsp;means multiplying by <span class="factor">× ${fStr}</span><br>
+      Same factor on second: ${state.b} <span class="arrow">→</span> ${state.b} × ${fStr} = <strong style="color:var(--green)">${(state.b*factor).toFixed(state.b*factor === Math.round(state.b*factor) ? 0 : 2)}</strong>
+    `;
+  } else {
+    document.getElementById('factor-view').innerHTML = `
+      In inverse problems, the <strong>product stays constant</strong>: ${state.a} × ${state.b} = <span class="factor">${state.a * state.b}</span> = ${state.c} × ?<br>
+      So ? = ${state.a * state.b} ÷ ${state.c} = <strong style="color:var(--green)">${d % 1 === 0 ? d : d.toFixed(2)}</strong>
+    `;
+  }
+
+  // Answer
+  const dDisplay = (d % 1 === 0) ? d : d.toFixed(2);
+  document.getElementById('answer').innerHTML = `
+    <div class="ab-lbl">Missing value</div>
+    <div class="ab-val">${dDisplay} <span style="font-size:16px;color:var(--text3)">${state.unit}</span></div>
+    <div class="ab-sub">${state.c} ${state.labelA.toLowerCase()} ↔ ${dDisplay} ${state.unit}</div>
+  `;
+
+  // Insight
+  if(state.mode === 'direct'){
+    document.getElementById('insight-area').innerHTML = `
+      <div class="insight">
+        <strong>Direct proportion:</strong> when one quantity scales up, the other scales up by the same factor. Cross-multiplication works: <strong>a × d = b × c</strong>. This is the textbook's Rule of Three.
+      </div>
+    `;
+  } else {
+    document.getElementById('insight-area').innerHTML = `
+      <div class="warn-box">
+        ⚠️ <strong>Inverse proportion — the Rule of Three doesn't apply directly.</strong> Faster speed means <em>less</em> time, more workers mean <em>fewer</em> days. The right relationship is <strong>a × b = c × d</strong> (the product is constant), not a:b :: c:d. Always check: when one goes up, does the other go up or down?
+      </div>
+    `;
+  }
+}
+
+loadScenario();
+</script>
+</body>
+</html>
