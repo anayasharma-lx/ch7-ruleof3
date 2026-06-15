@@ -1,154 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Rule of Three — 7.4</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Rule of Three — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#141210;
-  --surface:#1c1916;
-  --surface2:#232019;
-  --chalk:#f0ece3;
-  --chalk2:#b8b2a7;
-  --chalk3:#716b62;
-  --blue:#6ba3d6;
-  --amber:#e8a840;
-  --green:#5dbf8a;
-  --red:#e05a5a;
-  --rule:#2e2a24;
-  --display:'Playfair Display',Georgia,serif;
-  --mono:'DM Mono',monospace;
-  --body:'DM Sans',sans-serif;
+  --bg:#fdf8f0;--card:#fff;--canvas:#f2efe8;--ink:#1a1a1a;--ink2:#444;--ink3:#888;--bc:#e0dcd4;
+  --teal:#1a9e8f;--coral:#e8604c;--gold:#d4920a;--violet:#7c5cbf;--sky:#3d8fd6;
+  --blue:#3d8fd6;--amber:#d4920a;--green:#1a9e8f;--red:#e8604c;
+  --teal-bg:rgba(26,158,143,.12);--coral-bg:rgba(232,96,76,.12);--gold-bg:rgba(212,146,10,.12);
+  --blue-bg:rgba(61,143,214,.12);--amber-bg:rgba(212,146,10,.12);--green-bg:rgba(26,158,143,.12);
+  --sans:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+  --brd:3px solid var(--ink);--r:14px;
 }
-html,body{background:var(--bg);color:var(--chalk)}
-body{font-family:var(--body);min-height:100vh;-webkit-font-smoothing:antialiased;padding:0}
+html,body{width:100%;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body{display:flex;flex-direction:column}
 
-/* ── HEADER ── */
-.header{padding:24px 28px 20px;border-bottom:1px solid var(--rule);
-  display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
-.header-left{}
-.chap-tag{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--chalk3);margin-bottom:8px}
-.main-title{font-family:var(--display);font-size:clamp(34px,7vw,64px);font-weight:900;
-  line-height:.95;color:var(--chalk);letter-spacing:-.01em}
-.main-title em{font-style:italic;color:var(--amber)}
-.subtitle{font-family:var(--mono);font-size:12px;color:var(--chalk3);margin-top:10px;line-height:1.6}
-.mode-toggle{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
-.mode-btn{padding:8px 16px;border:1px solid var(--chalk3);background:transparent;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--chalk3);cursor:pointer;transition:all .15s;white-space:nowrap}
-.mode-btn.active.direct{border-color:var(--blue);color:var(--blue);background:#6ba3d610}
-.mode-btn.active.inverse{border-color:var(--red);color:var(--red);background:#e05a5a10}
-@media(max-width:580px){
-  .header{grid-template-columns:1fr}
-  .mode-toggle{flex-direction:row;align-items:flex-start}
-}
+/* HEADER */
+.header{padding:18px 28px 14px;border-bottom:var(--brd);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.18) 1px,transparent 1px);background-size:6px 6px;opacity:.5}
+.header-left{position:relative;z-index:1}
+.chap-tag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.main-title{font-family:var(--sans);font-size:clamp(32px,6vw,56px);font-weight:800;line-height:.95;color:#fff;letter-spacing:-.01em}
+.main-title em{font-style:italic;color:var(--gold)}
+.subtitle{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.5);margin-top:8px;line-height:1.5}
+.mode-toggle{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;position:relative;z-index:1}
+.mode-btn{padding:8px 16px;border:2px solid rgba(255,255,255,.3);border-radius:10px;background:transparent;font-family:var(--sans);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.5);cursor:pointer;transition:all .15s;white-space:nowrap}
+.mode-btn:hover{color:#fff;border-color:rgba(255,255,255,.6)}
+.mode-btn.active.direct{border-color:var(--blue);color:var(--blue);background:rgba(61,143,214,.15)}
+.mode-btn.active.inverse{border-color:var(--coral);color:var(--coral);background:var(--coral-bg)}
 
-/* ── SCENARIO STRIP ── */
-.scenario-strip{background:var(--surface);border-bottom:1px solid var(--rule);padding:0}
-.scenario-tabs{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+/* SCENARIO STRIP */
+.scenario-strip{border-bottom:2px solid var(--bc);background:var(--card)}
+.scenario-tabs{display:flex;overflow-x:auto;gap:0;scrollbar-width:none}
 .scenario-tabs::-webkit-scrollbar{display:none}
-.stab{padding:12px 18px;border:none;border-bottom:2px solid transparent;background:transparent;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--chalk3);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
-.stab.active{color:var(--chalk);border-bottom-color:var(--amber)}
-.stab:hover:not(.active){color:var(--chalk2)}
-.scenario-text{padding:16px 28px;font-size:14px;line-height:1.7;color:var(--chalk2);
-  border-bottom:1px solid var(--rule);font-style:italic}
-.scenario-text strong{color:var(--chalk);font-style:normal}
+.stab{padding:10px 18px;border:none;border-bottom:3px solid transparent;background:transparent;font-family:var(--sans);font-size:14px;font-weight:700;color:var(--ink3);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.stab:hover:not(.active){color:var(--ink2)}
+.stab.active{color:var(--ink);border-bottom-color:var(--gold)}
+.scenario-text{padding:12px 24px;font-size:14px;line-height:1.7;color:var(--ink2);background:var(--canvas);border-top:2px solid var(--bc)}
+.scenario-text strong{color:var(--ink);font-style:normal;font-weight:700}
 
-/* ── MAIN PROPORTION DISPLAY ── */
-.prop-display{padding:28px;display:grid;grid-template-columns:1fr 80px 1fr;
-  gap:0;align-items:center;border-bottom:1px solid var(--rule)}
-.prop-col{display:flex;flex-direction:column;gap:12px}
-.pc-head{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;opacity:.5}
-.pc-head.c-blue{color:var(--blue)}
-.pc-head.c-amber{color:var(--amber)}
-.prop-pair{display:flex;flex-direction:column;gap:6px}
-.pair-label{font-family:var(--mono);font-size:10px;color:var(--chalk3);text-transform:uppercase;letter-spacing:.08em}
-.pair-val{font-family:var(--display);font-size:clamp(36px,6vw,58px);font-weight:900;
-  line-height:1;color:var(--chalk)}
-.pair-val.c-blue{color:var(--blue)}
-.pair-val.c-amber{color:var(--amber)}
-.pair-val.unknown{color:var(--amber);font-style:italic}
-.pair-divider{width:100%;height:1.5px;background:var(--chalk3);opacity:.35;margin:4px 0}
-.prop-sep{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.sep-sym{font-family:var(--display);font-size:clamp(28px,5vw,44px);color:var(--chalk3)}
-.sep-line{width:1px;flex:1;background:var(--rule)}
-@media(max-width:580px){
-  .prop-display{grid-template-columns:1fr 48px 1fr;padding:20px 16px;gap:0}
-  .pair-val{font-size:clamp(28px,9vw,48px)}
+/* PROP DISPLAY */
+.prop-display{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;border-bottom:var(--brd);background:var(--card)}
+.prop-col{padding:20px 24px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.pc-head{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono);margin-bottom:4px}
+.pc-head.c-blue{color:var(--blue)}.pc-head.c-amber{color:var(--amber)}
+.prop-pair{display:flex;flex-direction:column;gap:4px;align-items:center;width:100%}
+.pair-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);font-family:var(--mono)}
+.pair-val{font-family:var(--mono);font-size:32px;font-weight:700;padding:8px 20px;border:var(--brd);border-radius:12px;background:var(--canvas);text-align:center;min-width:80px}
+.pair-val.c-blue{color:var(--blue);border-color:var(--blue)}
+.pair-val.c-amber{color:var(--amber);border-color:var(--amber)}
+.pair-val.unknown{color:var(--violet);border-color:var(--violet);border-style:dashed;background:var(--violet)+'12'}
+.pair-divider{width:1px;background:var(--bc);margin:16px 0}
+.prop-sep{display:flex;align-items:center;justify-content:center;padding:0}
+.sep-line{width:1px;height:100%;background:var(--bc)}
+.sep-sym{font-family:var(--sans);font-size:clamp(24px,4vw,40px);font-weight:800;color:var(--ink3);padding:16px 8px}
+
+/* CROSS BAND */
+.cross-band{padding:18px 24px;border-bottom:2px solid var(--bc);background:var(--canvas)}
+.cross-head{font-size:13px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:var(--mono)}
+.cross-equation{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:10px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.ce-lhs{color:var(--ink2)}.ce-op{color:var(--ink3)}.ce-rhs{color:var(--ink2)}
+.hl{color:var(--teal);font-weight:700}
+.cross-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:440px}
+.cg-cell{padding:8px 14px;border:2px solid var(--bc);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;background:var(--card)}
+.cg-cell.hl-blue{border-color:var(--blue);color:var(--blue);background:var(--blue-bg)}
+.cg-cell.hl-amber{border-color:var(--amber);color:var(--amber);background:var(--amber-bg)}
+.blu{color:var(--blue)}.amb{color:var(--amber)}.grn{color:var(--teal)}
+.grn.hl{color:var(--teal);font-weight:700}
+
+/* FACTOR / ANSWER BAND */
+.factor-band,.answer-band{padding:18px 24px;border-bottom:2px solid var(--bc);background:var(--card)}
+.fb-block{margin-bottom:10px}.fb-block:last-child{margin-bottom:0}
+.fb-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);font-family:var(--mono);margin-bottom:4px}
+.fb-eq{font-family:var(--mono);font-size:15px;font-weight:500;line-height:1.8;color:var(--ink2)}
+.fb-eq .hl{color:var(--teal);font-weight:700}
+.ans-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);font-family:var(--mono);margin-bottom:6px}
+.ans-value{font-family:var(--mono);font-size:52px;font-weight:700;color:var(--teal);line-height:1}
+.ans-unit{font-family:var(--mono);font-size:18px;color:var(--ink3);margin-left:4px}
+.ans-sentence{font-family:var(--mono);font-size:13px;color:var(--ink3);margin-top:6px;line-height:1.5}
+
+/* INSIGHT BAND */
+.insight-band{padding:18px 24px;background:var(--bg)}
+.insight-body{font-size:14px;line-height:1.75;color:var(--ink2)}
+.insight-body strong{color:var(--ink);font-weight:700}
+.insight-accent{color:var(--teal);font-weight:700}
+.insight-accent.warn{color:var(--coral)}
+.warn-box{padding:14px 18px;background:var(--coral-bg);border:2px solid var(--coral);border-radius:var(--r);font-size:13px;line-height:1.75;color:var(--ink2);margin-top:10px}
+
+@media(max-width:700px){
+  .prop-display{grid-template-columns:1fr auto 1fr;overflow-x:auto}
+  .scenario-text{padding:10px 16px}
+  .cross-band,.factor-band,.answer-band,.insight-band{padding:14px 16px}
+  .ans-value{font-size:36px}
+  .header{grid-template-columns:1fr}
 }
-
-/* ── CROSS MULTIPLY BAND ── */
-.cross-band{background:var(--surface);border-bottom:1px solid var(--rule);padding:22px 28px}
-.cross-head{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--chalk3);margin-bottom:16px}
-.cross-equation{font-family:var(--display);font-size:clamp(20px,4vw,32px);font-weight:700;
-  line-height:1.4;color:var(--chalk);display:flex;align-items:center;flex-wrap:wrap;gap:10px}
-.ce-lhs{color:var(--blue)}
-.ce-op{color:var(--chalk3);font-size:.8em}
-.ce-rhs{color:var(--amber)}
-.cross-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:320px;
-  margin-top:16px;position:relative}
-.cg-cell{padding:12px 16px;background:var(--surface2);border:1px solid var(--rule);
-  font-family:var(--display);font-size:26px;font-weight:700;text-align:center;line-height:1}
-.cg-cell.hl-blue{border-color:var(--blue);color:var(--blue);background:#6ba3d608}
-.cg-cell.hl-amber{border-color:var(--amber);color:var(--amber);background:#e8a84008}
-.cross-lines{position:absolute;inset:0;pointer-events:none}
-
-/* ── FACTOR VIEW ── */
-.factor-band{padding:18px 28px;border-bottom:1px solid var(--rule);
-  display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:500px){.factor-band{grid-template-columns:1fr}}
-.fb-block{background:var(--surface);border:1px solid var(--rule);padding:14px 16px}
-.fb-label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--chalk3);margin-bottom:8px}
-.fb-eq{font-family:var(--mono);font-size:14px;font-weight:500;line-height:1.7;color:var(--chalk2)}
-.fb-eq .hl{color:var(--chalk);font-weight:600}
-.fb-eq .blu{color:var(--blue)}
-.fb-eq .amb{color:var(--amber)}
-.fb-eq .grn{color:var(--green)}
-
-/* ── ANSWER ── */
-.answer-band{padding:22px 28px;border-bottom:1px solid var(--rule);
-  display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
-.ans-label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--chalk3)}
-.ans-value{font-family:var(--display);font-size:clamp(42px,8vw,72px);font-weight:900;
-  color:var(--green);line-height:1}
-.ans-unit{font-family:var(--mono);font-size:16px;color:var(--chalk3);align-self:flex-end;padding-bottom:8px}
-.ans-sentence{font-family:var(--mono);font-size:12px;color:var(--chalk2);
-  align-self:flex-end;padding-bottom:10px;line-height:1.6}
-
-/* ── INSIGHT ── */
-.insight-band{padding:20px 28px;display:flex;gap:16px}
-.insight-accent{width:3px;background:var(--amber);flex-shrink:0}
-.insight-accent.warn{background:var(--red)}
-.insight-body{font-size:13px;line-height:1.75;color:var(--chalk2)}
-.insight-body strong{color:var(--chalk)}
-.warn-box{padding:16px 20px;background:#e05a5a0a;border:1px solid #e05a5a30;
-  font-size:13px;line-height:1.75;color:var(--chalk2)}
-.warn-box strong{color:var(--red)}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-left">
-    <div class="chap-tag">Ch. 7 · §7.4 · Proportion</div>
+    <div class="chap-tag">Ch 7 · §7.4 · Proportion</div>
     <div class="main-title">Rule of <em>Three</em></div>
     <div class="subtitle">Three known · one missing · cross-multiply to solve</div>
   </div>
   <div class="mode-toggle">
     <button class="mode-btn active direct" data-mode="direct">Direct ↑↑</button>
-    <button class="mode-btn inverse" data-mode="inverse">Inverse ↑↓ ⚠</button>
+    <button class="mode-btn inverse" data-mode="inverse">Inverse ↑↓</button>
   </div>
 </div>
 
@@ -158,68 +120,53 @@ body{font-family:var(--body);min-height:100vh;-webkit-font-smoothing:antialiased
 </div>
 
 <div class="prop-display" id="prop-display"></div>
-
 <div class="cross-band" id="cross-band">
   <div class="cross-head">Cross multiplication</div>
   <div class="cross-equation" id="cross-eq"></div>
   <div class="cross-grid" id="cross-grid"></div>
 </div>
-
 <div class="factor-band" id="factor-band"></div>
-
 <div class="answer-band" id="answer-band"></div>
-
 <div class="insight-band" id="insight-band"></div>
 
 <script>
-const SCENARIOS={
-  direct:[
-    {label:'Lemonade',story:'Kesang adds <strong>10 spoons</strong> of sugar to <strong>6 glasses</strong> of lemonade. For <strong>18 glasses</strong> with the same sweetness, how many spoons does she need?',
-      la:'Glasses',lb:'Spoons',a:6,b:10,c:18,unit:'spoons'},
-    {label:'Car distance',story:'A car travels <strong>90 km</strong> in <strong>150 minutes</strong>. At the same speed, how far does it go in <strong>240 minutes</strong>?',
-      la:'Time (min)',lb:'Distance (km)',a:150,b:90,c:240,unit:'km'},
-    {label:'Midday meal',story:'The cook makes <strong>15 kg of rice</strong> for <strong>120 students</strong>. For <strong>80 students</strong>, how much rice is needed?',
-      la:'Students',lb:'Rice (kg)',a:120,b:15,c:80,unit:'kg'},
-    {label:'Bricks',story:'A <strong>10-ft wall</strong> takes <strong>1450 bricks</strong>. How many bricks for a <strong>108-ft wall</strong>?',
-      la:'Wall (ft)',lb:'Bricks',a:10,b:1450,c:108,unit:'bricks'},
-    {label:'Earth orbit',story:'Earth travels <strong>940 million km</strong> in a year (<strong>52 weeks</strong>). How far does it travel in just <strong>1 week</strong>?',
-      la:'Weeks',lb:'Distance (M km)',a:52,b:940,c:1,unit:'M km'}
-  ],
-  inverse:[
-    {label:'Speed vs time',story:"Puneeth's father covers Lucknow→Kanpur in <strong>2 hours at 50 km/h</strong>. How long would the same trip take at <strong>75 km/h</strong>?",
-      la:'Speed (km/h)',lb:'Time (hrs)',a:50,b:2,c:75,unit:'hours'},
-    {label:'Workers',story:'<strong>6 workers</strong> finish a job in <strong>10 days</strong>. The same job with <strong>15 workers</strong> — how many days?',
-      la:'Workers',lb:'Days',a:6,b:10,c:15,unit:'days'},
-    {label:'Tractor',story:'Oxen plough 1 acre in <strong>6 hours</strong>. A tractor is <strong>4× faster</strong>. How long for the tractor to plough the same acre?',
-      la:'Speed factor',lb:'Hours/acre',a:1,b:6,c:4,unit:'hours'}
-  ]
-};
-
+const DIRECT=[
+  {label:'Lemonade',story:'Kesang adds <strong>10 spoons</strong> of sugar to <strong>6 glasses</strong>. For <strong>18 glasses</strong>, how many spoons?',la:'Glasses',lb:'Spoons',a:6,b:10,c:18,unit:'spoons'},
+  {label:'Speed',story:'A car covers <strong>90 km</strong> in <strong>2 hours</strong>. How far in <strong>5 hours</strong> at the same speed?',la:'Hours',lb:'km',a:2,b:90,c:5,unit:'km'},
+  {label:'Tiles',story:'<strong>12 tiles</strong> cover <strong>4 m²</strong>. How many tiles for <strong>11 m²</strong>?',la:'Area (m²)',lb:'Tiles',a:4,b:12,c:11,unit:'tiles'},
+  {label:'Workers',story:'<strong>4 workers</strong> earn ₹<strong>1200</strong> in a day. How much do <strong>7 workers</strong> earn?',la:'Workers',lb:'Earnings (₹)',a:4,b:1200,c:7,unit:'₹'},
+  {label:'Recipe',story:'A recipe uses <strong>3 cups</strong> flour for <strong>12 cookies</strong>. How much flour for <strong>20 cookies</strong>?',la:'Cookies',lb:'Cups flour',a:12,b:3,c:20,unit:'cups'},
+  {label:'Shadow',story:'A pole of <strong>5 m</strong> casts a shadow of <strong>3 m</strong>. A tree casts a shadow of <strong>9 m</strong> — how tall is the tree?',la:'Shadow (m)',lb:'Height (m)',a:3,b:5,c:9,unit:'m'},
+  {label:'Ink',story:'A pen writes <strong>500 m</strong> before running dry, using <strong>2 ml</strong> of ink. How many metres with <strong>5 ml</strong>?',la:'Ink (ml)',lb:'Length (m)',a:2,b:500,c:5,unit:'m'},
+];
+const INVERSE=[
+  {label:'Workers',story:'<strong>6 workers</strong> finish a wall in <strong>10 days</strong>. How many days for <strong>15 workers</strong>?',la:'Workers',lb:'Days',a:6,b:10,c:15,unit:'days'},
+  {label:'Speed',story:'Travelling at <strong>60 km/h</strong> a journey takes <strong>4 hours</strong>. At <strong>80 km/h</strong>, how long?',la:'Speed (km/h)',lb:'Time (h)',a:60,b:4,c:80,unit:'hours'},
+  {label:'Pipes',story:'<strong>3 pipes</strong> fill a tank in <strong>8 hours</strong>. How long with <strong>6 pipes</strong>?',la:'Pipes',lb:'Hours',a:3,b:8,c:6,unit:'hours'},
+  {label:'Food',story:'Provisions for <strong>50 soldiers</strong> last <strong>30 days</strong>. How long for <strong>75 soldiers</strong>?',la:'Soldiers',lb:'Days',a:50,b:30,c:75,unit:'days'},
+];
 const state={mode:'direct',idx:0};
+function scenarios(){return state.mode==='direct'?DIRECT:INVERSE;}
 
-function fmt(n){return n%1===0?n:+n.toFixed(2);}
-
-function getD(s){
-  if(state.mode==='direct') return (s.b*s.c)/s.a;
-  else return (s.a*s.b)/s.c;
+function fmtFrac(n){
+  if(Number.isInteger(n))return String(n);
+  const d=Math.round(n*100)/100;
+  return d.toFixed(d%1===0?0:1);
 }
 
 function render(){
-  const scens=SCENARIOS[state.mode];
-  const s=scens[state.idx];
-  const d=getD(s);
-
-  // Tabs
-  document.getElementById('scenario-tabs').innerHTML=scens.map((sc,i)=>
-    `<button class="stab ${i===state.idx?'active':''}" data-i="${i}">${sc.label}</button>`
-  ).join('');
-  document.querySelectorAll('.stab').forEach(b=>{
-    b.addEventListener('click',()=>{state.idx=+b.dataset.i;render();});
-  });
-
+  const S=scenarios(),s=S[state.idx];
+  /* scenario tabs */
+  document.getElementById('scenario-tabs').innerHTML=S.map((sc,i)=>
+    `<button class="stab${i===state.idx?' active':''}" data-i="${i}">${sc.label}</button>`).join('');
+  document.querySelectorAll('.stab').forEach(b=>b.addEventListener('click',()=>{state.idx=+b.dataset.i;render();}));
   document.getElementById('scenario-text').innerHTML=s.story;
 
-  // Prop display
+  /* answer */
+  const ans=state.mode==='direct'?s.b*s.c/s.a:s.a*s.b/s.c;
+  const ansN=fmtFrac(ans);
+
+  /* prop display */
   document.getElementById('prop-display').innerHTML=`
     <div class="prop-col">
       <div class="pc-head c-blue">${s.la}</div>
@@ -227,112 +174,75 @@ function render(){
         <div class="pair-label">Known</div>
         <div class="pair-val c-blue">${s.a}</div>
         <div class="pair-divider"></div>
-        <div class="pair-label">New</div>
+        <div class="pair-label">Find when</div>
         <div class="pair-val c-blue">${s.c}</div>
       </div>
     </div>
-    <div class="prop-sep">
-      <div class="sep-sym">∶</div>
-      <div class="sep-line"></div>
-      <div class="sep-sym">∷</div>
-      <div class="sep-line"></div>
-      <div class="sep-sym">∶</div>
-    </div>
+    <div class="prop-sep"><div class="sep-line"></div><div class="sep-sym">=</div><div class="sep-line"></div></div>
     <div class="prop-col">
       <div class="pc-head c-amber">${s.lb}</div>
       <div class="prop-pair">
         <div class="pair-label">Known</div>
         <div class="pair-val c-amber">${s.b}</div>
         <div class="pair-divider"></div>
-        <div class="pair-label">Unknown</div>
+        <div class="pair-label">Answer</div>
         <div class="pair-val unknown">?</div>
       </div>
-    </div>
-  `;
+    </div>`;
 
-  // Cross multiply
-  let eqHTML,cg;
+  /* cross multiply */
   if(state.mode==='direct'){
-    eqHTML=`<span class="ce-lhs">${s.a} × ?</span><span class="ce-op">=</span><span class="ce-rhs">${s.b} × ${s.c}</span><span class="ce-op">→</span><span style="color:var(--green)">? = ${fmt(d)}</span>`;
-    cg=`<div class="cg-cell hl-blue">${s.a}</div><div class="cg-cell hl-amber">${s.b}</div>
-        <div class="cg-cell hl-blue">${s.c}</div><div class="cg-cell hl-amber">?</div>`;
-  } else {
-    eqHTML=`<span class="ce-lhs">${s.a} × ${s.b}</span><span class="ce-op">=</span><span class="ce-rhs">${s.c} × ?</span><span class="ce-op">→</span><span style="color:var(--green)">? = ${fmt(d)}</span>`;
-    cg=`<div class="cg-cell hl-blue">${s.a}</div><div class="cg-cell hl-amber" style="border-color:var(--blue);color:var(--blue);background:#6ba3d608">${s.b}</div>
-        <div class="cg-cell hl-amber">${s.c}</div><div class="cg-cell hl-amber">?</div>`;
-  }
-  document.getElementById('cross-eq').innerHTML=eqHTML;
-  document.getElementById('cross-grid').innerHTML=cg;
-
-  // Factor band
-  if(state.mode==='direct'){
-    const f=s.c/s.a;
-    const fStr=fmt(f);
+    document.getElementById('cross-eq').innerHTML=
+      `<span class="ce-lhs"><span class="blu">${s.a}</span> × ? = <span class="amb">${s.b}</span> × <span class="blu">${s.c}</span></span>
+       <span class="ce-op">→</span>
+       <span class="ce-rhs">? = <span class="grn hl">${ansN}</span></span>`;
+    document.getElementById('cross-grid').innerHTML=
+      `<div class="cg-cell hl-blue">Known: ${s.la} = ${s.a}</div>
+       <div class="cg-cell hl-amber">Known: ${s.lb} = ${s.b}</div>
+       <div class="cg-cell hl-blue">Find: ${s.la} = ${s.c}</div>
+       <div class="cg-cell hl-amber" style="border-color:var(--teal);color:var(--teal);background:var(--teal-bg)">Answer: ${ansN}</div>`;
     document.getElementById('factor-band').innerHTML=`
-      <div class="fb-block">
-        <div class="fb-label">Scale factor</div>
-        <div class="fb-eq"><span class="blu">${s.la}</span>: ${s.a} → ${s.c} <span class="hl">= ×${fStr}</span></div>
-        <div class="fb-eq">Apply same to <span class="amb">${s.lb}</span>:</div>
-        <div class="fb-eq">${s.b} × ${fStr} = <span class="grn">${fmt(d)}</span></div>
-      </div>
-      <div class="fb-block">
-        <div class="fb-label">Verification</div>
-        <div class="fb-eq">${s.a} / ${s.b} = ${fmt(s.a/s.b)}</div>
-        <div class="fb-eq">${s.c} / ${fmt(d)} = ${fmt(s.c/d)}</div>
-        <div class="fb-eq"><span class="grn hl">Equal ✓ — same ratio</span></div>
-      </div>
-    `;
+      <div class="fb-block"><div class="fb-label">Scale factor</div>
+      <div class="fb-eq"><span class="blu">${s.la}</span>: ${s.a} → ${s.c} <span class="hl">= ×${fmtFrac(s.c/s.a)}</span></div></div>
+      <div class="fb-block"><div class="fb-label">Apply same factor</div>
+      <div class="fb-eq"><span class="amb">${s.lb}</span>: ${s.b} × ${fmtFrac(s.c/s.a)} <span class="hl">= ${ansN}</span></div></div>`;
   } else {
-    const prod=s.a*s.b;
+    const product=s.a*s.b;
+    document.getElementById('cross-eq').innerHTML=
+      `<span class="ce-lhs"><span class="blu">${s.a}</span> × <span class="amb">${s.b}</span> = <span class="blu">${s.c}</span> × ?</span>
+       <span class="ce-op">→</span>
+       <span class="ce-rhs">? = <span class="grn hl">${ansN}</span></span>`;
+    document.getElementById('cross-grid').innerHTML=
+      `<div class="cg-cell hl-blue">Known: ${s.la} = ${s.a}</div>
+       <div class="cg-cell hl-amber">Known: ${s.lb} = ${s.b}</div>
+       <div class="cg-cell hl-blue">Find when: ${s.la} = ${s.c}</div>
+       <div class="cg-cell hl-amber" style="border-color:var(--teal);color:var(--teal);background:var(--teal-bg)">Answer: ${ansN}</div>`;
     document.getElementById('factor-band').innerHTML=`
-      <div class="fb-block">
-        <div class="fb-label">Product stays constant</div>
-        <div class="fb-eq"><span class="blu">${s.a}</span> × <span class="amb">${s.b}</span> = <span class="hl">${prod}</span></div>
-        <div class="fb-eq"><span class="blu">${s.c}</span> × <span class="amb">?</span> = <span class="hl">${prod}</span></div>
-        <div class="fb-eq">? = ${prod} ÷ ${s.c} = <span class="grn">${fmt(d)}</span></div>
-      </div>
-      <div class="fb-block" style="border-color:var(--red)">
-        <div class="fb-label" style="color:var(--red)">⚠ Not Rule of Three</div>
-        <div class="fb-eq">Direct formula would give <span style="color:var(--red)">${fmt((s.b*s.c)/s.a)}</span></div>
-        <div class="fb-eq" style="color:var(--chalk3)">— that's the wrong answer here.</div>
-        <div class="fb-eq">Correct: product = k, so <span class="grn">${fmt(d)}</span></div>
-      </div>
-    `;
+      <div class="fb-block"><div class="fb-label">Product stays constant</div>
+      <div class="fb-eq"><span class="blu">${s.a}</span> × <span class="amb">${s.b}</span> = <span class="hl">${product}</span></div></div>
+      <div class="fb-block"><div class="fb-label">Find the missing value</div>
+      <div class="fb-eq">${product} ÷ <span class="blu">${s.c}</span> <span class="hl">= ${ansN}</span></div></div>`;
   }
 
-  // Answer
   document.getElementById('answer-band').innerHTML=`
     <div class="ans-label">Answer</div>
-    <div class="ans-value">${fmt(d)}</div>
-    <div class="ans-unit">${s.unit}</div>
-    <div class="ans-sentence">${s.c} ${s.la.toLowerCase()} ↔ ${fmt(d)} ${s.unit}</div>
-  `;
+    <div><span class="ans-value">${ansN}</span> <span class="ans-unit">${s.unit}</span></div>
+    <div class="ans-sentence">When ${s.la.toLowerCase()} = ${s.c}, then ${s.lb.toLowerCase()} = <strong>${ansN} ${s.unit}</strong></div>`;
 
-  // Insight
-  const ib=document.getElementById('insight-band');
-  if(state.mode==='direct'){
-    ib.innerHTML=`
-      <div class="insight-accent"></div>
-      <div class="insight-body"><strong>Direct proportion:</strong> when one quantity increases, the other increases by the same factor. The ratio stays constant. Cross-multiplication rule: <strong>a × d = b × c</strong>. Divide both sides to find the unknown.</div>
-    `;
-  } else {
-    ib.innerHTML=`
-      <div class="insight-accent warn"></div>
-      <div class="warn-box"><strong>⚠ Inverse proportion — check before you calculate.</strong> More speed → less time. More workers → fewer days. One goes up, the other goes down. The relationship is <strong>a × b = c × d</strong> (constant product), not a:b :: c:d. Always ask: "if one increases, does the other increase or decrease?" before choosing your method.</div>
-    `;
-  }
+  const isD=state.mode==='direct';
+  document.getElementById('insight-band').innerHTML=`
+    <div class="insight-body">
+      ${isD?
+        `<strong>Direct proportion:</strong> both quantities increase together. If one doubles, so does the other. The ratio <span class="insight-accent">${s.la} : ${s.lb}</span> stays constant.`:
+        `<strong>Inverse proportion:</strong> one goes up, the other goes down. Their <em>product</em> stays constant: <span class="insight-accent">${s.a} × ${s.b} = ${s.a*s.b}</span>.`}
+    </div>
+    ${!isD?'<div class="warn-box"><strong>⚠ Inverse ≠ Direct:</strong> Do not divide by the scale factor here — instead, multiply it into the denominator. Confusing these two is the most common error.</div>':''}`;
 }
 
-document.querySelectorAll('.mode-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    state.mode=b.dataset.mode;
-    state.idx=0;
-    render();
-  });
-});
-
+document.querySelectorAll('.mode-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');state.mode=btn.dataset.mode;state.idx=0;render();
+}));
 render();
 </script>
 </body>
